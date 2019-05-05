@@ -1,19 +1,27 @@
-import React from 'react'
-// import * as BooksAPI from './BooksAPI'
-import './App.css'
+import React from 'react';
+import * as BooksAPI from './BooksAPI'
+import './App.css';
+import Book from './assets/Book.jsx';
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
+    myBooks: [],
     showSearchPage: false
   }
 
+  componentDidMount() {
+    this.fetchBooks();
+  }
+
+  fetchBooks = () => {
+    BooksAPI.getAll()
+    .then((books) => {
+      this.setState({myBooks: books})
+    });
+  }
+
   render() {
+    console.log(this.state.myBooks);
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -66,6 +74,7 @@ class BooksApp extends React.Component {
                           <div className="book-authors">Harper Lee</div>
                         </div>
                       </li>
+                      <Book/>
                       <li>
                         <div className="book">
                           <div className="book-top">
