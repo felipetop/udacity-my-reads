@@ -4,7 +4,14 @@ import { PropTypes } from 'prop-types';
 class Book extends Component {
     static propTypes = {
         book: PropTypes.objectOf(PropTypes.any).isRequired,
+        onChangeShelf: PropTypes.func.isRequired,
     };
+
+    changeShelf = (e) => {
+        const { book, onChangeShelf } = this.props;
+        const shelf = e.target.value;
+        onChangeShelf(book, shelf);
+    }
 
     render() {
         const { book } = this.props;
@@ -14,8 +21,8 @@ class Book extends Component {
                     <div className="book-top">
                         <div className="book-cover" style={{ backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                         <div className="book-shelf-changer">
-                            <select>
-                                <option value="move" disabled>Move to...</option>
+                            <select onChange={this.changeShelf} value={book.shelf || 'none'}>
+                                <option disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
                                 <option value="read">Read</option>

@@ -6,6 +6,7 @@ class BookShelf extends Component {
     static propTypes = {
         books: PropTypes.arrayOf(PropTypes.any),
         title: PropTypes.string,
+        changeBookShelf: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -14,12 +15,13 @@ class BookShelf extends Component {
     };
 
     render() {
-        const { books, title } = this.props;
+        const { books, title, changeBookShelf } = this.props;
         const shelf = books.map(
             book => (
                 <Book
                     key={book.id}
                     book={book}
+                    onChangeShelf={changeBookShelf}
                 />
             ),
         );
